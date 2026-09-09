@@ -1,0 +1,24 @@
+{
+  "model": "gpt2-small",
+  "baseline": 0.8143220543861389,
+  "circuits": {
+    "EAP-IG-inputs": {
+      "perf": 0.7449119687080383,
+      "recovery": 0.9147633478618923,
+      "nodes": 29,
+      "edges": 150
+    },
+    "EAP": {
+      "perf": 0.656327486038208,
+      "recovery": 0.8059802414819379,
+      "nodes": 35,
+      "edges": 165
+    },
+    "clean-corrupted": {
+      "perf": 0.6857951283454895,
+      "recovery": 0.8421669591921627,
+      "nodes": 31,
+      "edges": 151
+    }
+  }
+}

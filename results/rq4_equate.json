@@ -1,0 +1,124 @@
+{
+  "model": "Qwen/Qwen2.5-7B",
+  "note": "eap.evaluate.evaluate_graph requires clean/corrupted pairs of EQUAL token length for positional patching. That pairing is constructible for the synthetic comparison-NLI probe (fixed template, single-token numeric corruption) but not for naturalistic EQUATE premise/hypothesis text of widely varying length -- there is no principled equal-length 'corrupted' counterpart to a naturalistic pair. We therefore do not run evaluate_graph here. Instead we test necessity of Qwen's own NLI-circuit late MLPs (layer_fraction >= 0.6, from results/rq4_circuits.json's qwen_nli.layer_fractions / results/graph_Qwen_Qwen2.5-7B_nli_EAP-IG-inputs.json) on naturalistic EQUATE items via hook-based zero-ablation, compared against a size-matched random control drawn from MLPs with layer_fraction < 0.5 (identical scheme to experiments/rq4_nli.py:necessity_probe_pythia28b).",
+  "subsets": {
+    "rtequant": {
+      "n": 166,
+      "accuracy": 0.6024096385542169,
+      "mean_logit_diff": 0.9407720508345638,
+      "ci": {
+        "mean": 0.9407720508345638,
+        "lo": 0.6042053725346025,
+        "hi": 1.2643330622868365
+      }
+    },
+    "awpnli": {
+      "n": 722,
+      "accuracy": 0.5526315789473685,
+      "mean_logit_diff": 0.2270086980592511,
+      "ci": {
+        "mean": 0.2270086980592511,
+        "lo": 0.10698884811427785,
+        "hi": 0.3501275922452974
+      }
+    }
+  },
+  "circuit_transfer": {
+    "method": "hook_based_zero_ablation_transfer",
+    "note": "eap.evaluate.evaluate_graph requires clean/corrupted pairs of EQUAL token length for positional patching. That pairing is constructible for the synthetic comparison-NLI probe (fixed template, single-token numeric corruption) but not for naturalistic EQUATE premise/hypothesis text of widely varying length -- there is no principled equal-length 'corrupted' counterpart to a naturalistic pair. We therefore do not run evaluate_graph here. Instead we test necessity of Qwen's own NLI-circuit late MLPs (layer_fraction >= 0.6, from results/rq4_circuits.json's qwen_nli.layer_fractions / results/graph_Qwen_Qwen2.5-7B_nli_EAP-IG-inputs.json) on naturalistic EQUATE items via hook-based zero-ablation, compared against a size-matched random control drawn from MLPs with layer_fraction < 0.5 (identical scheme to experiments/rq4_nli.py:necessity_probe_pythia28b).",
+    "late_mlps": [
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27
+    ],
+    "control_layers": [
+      0,
+      1,
+      2,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ],
+    "subsets": {
+      "rtequant": {
+        "baseline": {
+          "n": 166,
+          "accuracy": 0.6024096385542169,
+          "mean_logit_diff": 0.9407720508345638,
+          "ci": {
+            "mean": 0.9407720508345638,
+            "lo": 0.6042053725346025,
+            "hi": 1.2643330622868365
+          }
+        },
+        "late_mlp_ablated": {
+          "n": 166,
+          "accuracy": 0.5783132530120482,
+          "mean_logit_diff": 0.40487631257758083,
+          "ci": {
+            "mean": 0.40487631257758083,
+            "lo": 0.01011071363127376,
+            "hi": 0.7951386860336161
+          }
+        },
+        "control_ablated": {
+          "n": 166,
+          "accuracy": 0.45180722891566266,
+          "mean_logit_diff": -0.06674388230565083,
+          "ci": {
+            "mean": -0.06674388230565083,
+            "lo": -0.2105586893048631,
+            "hi": 0.07636783151741484
+          }
+        }
+      },
+      "awpnli": {
+        "baseline": {
+          "n": 722,
+          "accuracy": 0.5526315789473685,
+          "mean_logit_diff": 0.2270086980592511,
+          "ci": {
+            "mean": 0.2270086980592511,
+            "lo": 0.10698884811427785,
+            "hi": 0.3501275922452974
+          }
+        },
+        "late_mlp_ablated": {
+          "n": 722,
+          "accuracy": 0.5,
+          "mean_logit_diff": 0.02130170079809807,
+          "ci": {
+            "mean": 0.02130170079809807,
+            "lo": -0.18176737873508,
+            "hi": 0.22787935304509635
+          }
+        },
+        "control_ablated": {
+          "n": 722,
+          "accuracy": 0.49722991689750695,
+          "mean_logit_diff": -0.017507350593392538,
+          "ci": {
+            "mean": -0.017507350593392538,
+            "lo": -0.0899914734498946,
+            "hi": 0.05141055863195835
+          }
+        }
+      }
+    },
+    "caveat": "CAVEAT: the size-matched control pool (layer_fraction < 0.5) includes early MLPs (layers 0-2), which are generically disruptive to ablate irrespective of circuit membership; the control is therefore conservative and the 'necessary but not selective' reading of these numbers is tentative."
+  },
+  "caveat": "CAVEAT: the size-matched control pool (layer_fraction < 0.5) includes early MLPs (layers 0-2), which are generically disruptive to ablate irrespective of circuit membership; the control is therefore conservative and the 'necessary but not selective' reading of these numbers is tentative."
+}

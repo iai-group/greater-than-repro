@@ -1,0 +1,49 @@
+[project]
+name = "gt-tl-repro"
+version = "0.1.0"
+description = "TransformerLens reproduction of the GPT-2 greater-than circuit (Hanna et al. 2023) via EAP-IG"
+requires-python = ">=3.11,<3.12"   # matches EAP-IG/.python-version
+dependencies = [
+    "eap",                          # local library (../EAP-IG), pulls transformer-lens
+    "transformer-lens>=2.15.0",
+    "torch>=2.1,<2.5",              # cu121 wheels to match uenv cuda-12.1.0
+    "pandas",
+    "numpy",
+    "matplotlib>=3.10.1",
+    # This cluster is glibc 2.27 (Ubuntu 18.04): manylinux2014 (glibc 2.17) wheels
+    # work, manylinux_2_28 wheels do NOT. transformer-lens sets only loose lower
+    # bounds, so pin its heavy transitive deps to the last versions that still
+    # ship glibc-2.17 wheels, else uv falls back to failing source builds:
+    "transformers>=4.43,<5",  # TL 2.15 reads transformers.TRANSFORMERS_CACHE, removed in v5
+    "wandb>=0.16,<0.18",      # pre wandb-core (avoids the failing `go build`)
+    "pyarrow>=14,<17",        # 17+ is manylinux_2_28 only
+    "datasets>=2.14,<3",      # pure-python; keep it off the pyarrow>=17 requirement
+]
+
+[tool.uv]
+# Never source-build these compiled deps — force a compatible wheel or fail fast
+# (so uv backtracks to a glibc-2.17 wheel instead of trying to compile).
+no-build-package = ["wandb", "pyarrow"]
+
+[tool.uv.sources]
+# Build the eap package from our local clone (editable so we can patch/extend it).
+eap = { path = "../EAP-IG", editable = true }
+# Keep torch on the CUDA 12.1 wheel index (not default PyPI CPU wheels).
+torch = { index = "pytorch-cu121" }
+
+[[tool.uv.index]]
+name = "pytorch-cu121"
+url = "https://download.pytorch.org/whl/cu121"
+explicit = true
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]
+
+[tool.hatch.build.targets.wheel]
+bypass-selection = true

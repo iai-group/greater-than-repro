@@ -1,0 +1,27 @@
+# Environment and caches
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# SLURM job output
+*.log
+*.err
+*.out
+
+# Attribution graphs for the larger checkpoints. These are intermediates, not
+# results: every number in the paper comes from the committed rq3_*.json and
+# rq4_*.json files. The largest exceed GitHub's per-file limits (pythia-12b is
+# 225MB), so none of the >=17MB graphs are committed. Regenerate any of them
+# with experiments/rq3_crossmodel.py --discover (see README section 3).
+results/graph_gpt2-medium_*.json
+results/graph_pythia-410m_*.json
+results/graph_pythia-1.4b_*.json
+results/graph_pythia-2.8b_*.json
+results/graph_pythia-6.9b_*.json
+results/graph_pythia-12b_*.json
+results/graph_Qwen_*.json
+
+# Converted third-party evaluation data. Regenerate with data/convert_*.py
+# from the upstream releases rather than redistributing them here.
+data/*.jsonl

@@ -1,0 +1,78 @@
+{
+  "n_buckets": 11,
+  "n_samples": 1000,
+  "late_threshold": 0.5,
+  "reference_model": "gpt2-small",
+  "models": {
+    "gpt2-medium": {
+      "observed_iou": 0.7142857142857143,
+      "circuit_size": 38,
+      "sampled_size": 38,
+      "n_late_candidates": 204,
+      "null_mean": 0.3654444444444444,
+      "null_sd": 0.05950316118476518,
+      "null_p95": 0.47368421052631576,
+      "percentile": 100.0
+    },
+    "pythia-160m": {
+      "observed_iou": 0.8095238095238095,
+      "circuit_size": 40,
+      "sampled_size": 40,
+      "n_late_candidates": 78,
+      "null_mean": 0.4242631578947369,
+      "null_sd": 0.06339275913390005,
+      "null_p95": 0.5263157894736842,
+      "percentile": 100.0
+    },
+    "pythia-410m": {
+      "observed_iou": 0.7142857142857143,
+      "circuit_size": 36,
+      "sampled_size": 36,
+      "n_late_candidates": 204,
+      "null_mean": 0.359125730994152,
+      "null_sd": 0.05710312600625877,
+      "null_p95": 0.47368421052631576,
+      "percentile": 100.0
+    },
+    "pythia-1.4b": {
+      "observed_iou": 0.7619047619047619,
+      "circuit_size": 43,
+      "sampled_size": 43,
+      "n_late_candidates": 204,
+      "null_mean": 0.37831578947368416,
+      "null_sd": 0.06169422475811037,
+      "null_p95": 0.47368421052631576,
+      "percentile": 100.0
+    },
+    "pythia-2.8b": {
+      "observed_iou": 0.7142857142857143,
+      "circuit_size": 51,
+      "sampled_size": 51,
+      "n_late_candidates": 528,
+      "null_mean": 0.33857894736842103,
+      "null_sd": 0.05531615543009837,
+      "null_p95": 0.42105263157894735,
+      "percentile": 100.0
+    },
+    "pythia-6.9b": {
+      "observed_iou": 0.65,
+      "circuit_size": 43,
+      "sampled_size": 43,
+      "n_late_candidates": 528,
+      "null_mean": 0.3280526315789473,
+      "null_sd": 0.053460388492710474,
+      "null_p95": 0.42105263157894735,
+      "percentile": 100.0
+    },
+    "pythia-12b": {
+      "observed_iou": 0.65,
+      "circuit_size": 51,
+      "sampled_size": 51,
+      "n_late_candidates": 738,
+      "null_mean": 0.32418128654970757,
+      "null_sd": 0.049980270318203235,
+      "null_p95": 0.42105263157894735,
+      "percentile": 100.0
+    }
+  }
+}
